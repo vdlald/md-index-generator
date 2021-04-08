@@ -23,7 +23,7 @@ public class App implements Runnable {
     final String pathToMdFile = args[0];
 
     // create dependencies
-    final MdElementTypeIdentifier identifierStub = line -> null;
+    final MdElementTypeIdentifier identifierStub = new MdElementTypeIdentifierImpl();
 
     // create app
     new App(
