@@ -15,11 +15,13 @@ public class TableOfContentsSerializeStream {
   public String nextLine() {
     final HeadElement headElement = headers.next();
 
-    final short level = headElement.getLevel();
     final String line = headElement.getLine();
+
+    final String content = line.substring(headElement.getLevel()).trim();
+    final short level = headElement.getLevel();
     final String link = headElement.getLink();
     final String tabs = "\t".repeat(level);
 
-    return String.format("%s[%s](%s)", tabs, line, link);
+    return String.format("%s[%s](%s)", tabs, content, link);
   }
 }

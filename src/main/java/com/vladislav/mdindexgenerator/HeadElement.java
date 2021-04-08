@@ -1,6 +1,9 @@
 package com.vladislav.mdindexgenerator;
 
 import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
@@ -10,6 +13,9 @@ import lombok.ToString;
 public class HeadElement {
 
   private static final byte SYMBOL = '#';
+  private static final Set<Integer> allowedChars = "abcdefghijklmnopqrstuvwxyz123456789 ".chars()
+      .boxed()
+      .collect(Collectors.toUnmodifiableSet());
 
   @Getter
   private final String line;
@@ -31,7 +37,31 @@ public class HeadElement {
   }
 
   public String getLink() {
+    final StringBuilder result = new StringBuilder().append('#');
+
+    final String lowerCase = line.substring(getLevel()).trim().toLowerCase();
+
+    final Character[] filtered = lowerCase.chars()
+        .filter(allowedChars::contains)
+        .mapToObj(value -> (char) value)
+        .toArray(Character[]::new);
+
+    char lastChar = '\0';
+    for (Character value : filtered) {
+      Character character = value;
+
+      if (character == ' ')
+        character = '-';
+
+      if (lastChar == character && lastChar == '-') {
+        continue;
+      } else {
+        lastChar = character;
+        result.append(character);
+      }
+    }
+
     // TODO: 4/8/21 implement
-    return line;
+    return result.toString();
   }
 }

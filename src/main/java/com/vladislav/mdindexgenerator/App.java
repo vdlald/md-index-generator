@@ -50,6 +50,7 @@ public class App implements Runnable {
     String line;
     try {
       while ((line = bufferedReader.readLine()) != null) {
+        line = line.trim();
         final MdElementType type = elementTypeIdentifier.identify(line);
 
         if (type != MdElementType.HEADER) {
