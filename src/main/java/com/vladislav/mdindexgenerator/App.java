@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Iterator;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -62,6 +63,14 @@ public class App implements Runnable {
       bufferedReader.close();
     } catch (IOException e) {
       e.printStackTrace();
+      return;
+    }
+
+    final Iterator<HeadElement> iterator = tableOfContents.getHeaders().iterator();
+    final var serializeStream = new TableOfContentsSerializeStream(iterator);
+
+    while (serializeStream.hasNext()) {
+      System.out.println(serializeStream.nextLine());
     }
   }
 }
