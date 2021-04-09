@@ -35,9 +35,10 @@ public class App implements Runnable {
   @Override
   public void run() {
     // create reader
-    final BufferedReader bufferedReader;
+    BufferedReader bufferedReader;
+    FileReader fileReader;
     try {
-      final FileReader fileReader = new FileReader(pathToMdFile);
+      fileReader = new FileReader(pathToMdFile);
       bufferedReader = new BufferedReader(fileReader);
     } catch (FileNotFoundException e) {
       System.out.println("File not found.");
@@ -72,6 +73,18 @@ public class App implements Runnable {
 
     while (serializeStream.hasNext()) {
       System.out.println(serializeStream.nextLine());
+    }
+    System.out.println();
+
+    try {
+      fileReader = new FileReader(pathToMdFile);
+      bufferedReader = new BufferedReader(fileReader);
+
+      while ((line = bufferedReader.readLine()) != null) {
+        System.out.println(line);
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
     }
   }
 }

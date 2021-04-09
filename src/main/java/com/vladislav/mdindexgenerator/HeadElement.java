@@ -1,7 +1,6 @@
 package com.vladislav.mdindexgenerator;
 
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.Getter;
@@ -50,8 +49,9 @@ public class HeadElement {
     for (Character value : filtered) {
       Character character = value;
 
-      if (character == ' ')
+      if (character == ' ') {
         character = '-';
+      }
 
       if (lastChar == character && lastChar == '-') {
         continue;
