@@ -1,4 +1,4 @@
-package com.vladislav.mdindexgenerator;
+package com.vladislav.mdindexgenerator.pojo;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Set;
@@ -61,7 +61,6 @@ public class HeadElement {
       }
     }
 
-    // TODO: 4/8/21 implement
     return result.toString();
   }
 }

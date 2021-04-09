@@ -1,4 +1,4 @@
-package com.vladislav.mdindexgenerator;
+package com.vladislav.mdindexgenerator.pojo;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

@@ -1,12 +1,13 @@
-package com.vladislav.mdindexgenerator;
+package com.vladislav.mdindexgenerator.components.serializers;
 
+import com.vladislav.mdindexgenerator.pojo.HeadElement;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class TableOfContentsSerializeStream {
+public class TableOfContentsSerializeStreamImpl implements TableOfContentsSerializeStream {
 
   private final Iterator<HeadElement> headers;
 
@@ -22,20 +23,12 @@ public class TableOfContentsSerializeStream {
     put((short) 6, 1);
   }};
 
-  @SuppressWarnings("unused")
-  public static TableOfContentsSerializeStream spaceTab(Iterator<HeadElement> headers) {
-    return new TableOfContentsSerializeStream(headers, "    ");
-  }
-
-  @SuppressWarnings("unused")
-  public static TableOfContentsSerializeStream tab(Iterator<HeadElement> headers) {
-    return new TableOfContentsSerializeStream(headers, "\t");
-  }
-
+  @Override
   public boolean hasNext() {
     return headers.hasNext();
   }
 
+  @Override
   public String nextLine() {
     final HeadElement headElement = headers.next();
 

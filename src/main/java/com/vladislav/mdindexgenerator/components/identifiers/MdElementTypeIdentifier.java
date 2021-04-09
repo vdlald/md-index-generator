@@ -1,4 +1,4 @@
-package com.vladislav.mdindexgenerator;
+package com.vladislav.mdindexgenerator.components.identifiers;
 
 public interface MdElementTypeIdentifier {
 
