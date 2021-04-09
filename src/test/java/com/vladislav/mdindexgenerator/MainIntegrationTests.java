@@ -1,5 +1,7 @@
 package com.vladislav.mdindexgenerator;
 
+import static org.junit.Assert.assertEquals;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import lombok.SneakyThrows;
@@ -7,8 +9,6 @@ import org.junit.Test;
 
 /**
  * This is where you register your integration tests.
- * <p>
- * DO NOT WRITE ACTUAL TESTS HERE! Only run them.
  */
 public class MainIntegrationTests {
 
@@ -18,11 +18,26 @@ public class MainIntegrationTests {
   public void simpleTest() {
     final String expected = getOut();
     final String[] args = {getInPath()};
+    test(expected, args);
+  }
+
+  @Test
+  public void nestedMdBlockTest() {
+    final String expected = getOut();
+    final String[] args = {getInPath()};
+    test(expected, args);
+  }
+
+  private void test(final String expected, final String[] args) {
     final StringBuffer out = new StringBuffer();
 
-    final Main main = setUpMain(args, out);
+    Main main = new Main(args);
+    main.setOut(s -> out.append(s).append('\n'));
 
-    new SimpleIntegrationTest(main, expected, out).test();
+    main.run();
+    final String result = out.toString();
+
+    assertEquals(expected, result);
   }
 
   /**
@@ -64,11 +79,5 @@ public class MainIntegrationTests {
     );
 
     return MainIntegrationTests.class.getResource(path).getPath();
-  }
-
-  private Main setUpMain(String[] args, StringBuffer out) {
-    Main main = new Main(args);
-    main.setOut(s -> out.append(s).append('\n'));
-    return main;
   }
 }
