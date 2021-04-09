@@ -42,6 +42,13 @@ public class MainIntegrationTests {
     test(expected, args);
   }
 
+  @Test
+  public void headerWithLinkTest() {
+    final String expected = getOut();
+    final String[] args = {getInPath()};
+    test(expected, args);
+  }
+
   private void test(final String expected, final String[] args) {
     final StringBuffer out = new StringBuffer();
 
