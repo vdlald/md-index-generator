@@ -9,7 +9,7 @@
 
 Input:
 
-```md
+```markdown
 # My Project
 ## Idea
 content
@@ -22,7 +22,7 @@ content
 
 Output:
 
-```md
+```markdown
 1. [My Project](#my-project)
     1. [Idea](#idea)
     2. [Implementation](#implementation)
