@@ -9,7 +9,16 @@ public class MdElementTypeIdentifierImpl implements MdElementTypeIdentifier {
     }
 
     if (line.startsWith("#")) {
-      return MdElementType.HEADER;
+      final char[] chars = new char[7];
+      line.getChars(0, 7, chars, 0);
+      for (final char aChar : chars) {
+        if (aChar == ' ') {
+          return MdElementType.HEADER;
+        } else if (aChar != '#') {
+          return MdElementType.OTHER;
+        }
+      }
+      return MdElementType.OTHER;
     } else if (line.startsWith("    ")) {
       return MdElementType.CODE_BLOCK;
     } else if (line.startsWith("```")) {
