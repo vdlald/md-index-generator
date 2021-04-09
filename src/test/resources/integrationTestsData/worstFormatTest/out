@@ -4,15 +4,6 @@
     1. [Duplicate](#duplicate)
     2. [Duplicate](#duplicate-1)
 
-`worst format file`
-
-```markdown
-# code block
-## code block
-# Header
-# Header
-```
-
 ```markdown incorrect code block```
 
    # Header with space at the start

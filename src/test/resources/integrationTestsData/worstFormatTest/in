@@ -1,12 +1,3 @@
-`worst format file`
-
-```markdown
-# code block
-## code block
-# Header
-# Header
-```
-
 ```markdown incorrect code block```
 
    # Header with space at the start
@@ -23,3 +14,7 @@ lorem
 
 #not a header
 ####### not a header
+
+`
+# Header
+`
