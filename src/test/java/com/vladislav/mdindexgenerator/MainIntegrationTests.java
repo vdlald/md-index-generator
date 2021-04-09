@@ -29,7 +29,14 @@ public class MainIntegrationTests {
   }
 
   @Test
-  public void worstFormat() {
+  public void worstFormatTest() {
+    final String expected = getOut();
+    final String[] args = {getInPath()};
+    test(expected, args);
+  }
+
+  @Test
+  public void inlineCodeTest() {
     final String expected = getOut();
     final String[] args = {getInPath()};
     test(expected, args);
