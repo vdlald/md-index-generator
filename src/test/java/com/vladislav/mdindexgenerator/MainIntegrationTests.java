@@ -28,6 +28,13 @@ public class MainIntegrationTests {
     test(expected, args);
   }
 
+  @Test
+  public void worstFormat() {
+    final String expected = getOut();
+    final String[] args = {getInPath()};
+    test(expected, args);
+  }
+
   private void test(final String expected, final String[] args) {
     final StringBuffer out = new StringBuffer();
 
@@ -53,7 +60,7 @@ public class MainIntegrationTests {
     final String methodName = Thread.currentThread().getStackTrace()[2].getMethodName();
 
     final String rawPath = MainIntegrationTests.class.getResource(String.format(
-        "%s/%s/out.md",
+        "%s/%s/out",
         integrationTestsFolderPath,
         methodName
     )).getPath();
@@ -73,7 +80,7 @@ public class MainIntegrationTests {
   @SneakyThrows
   private String getInPath() {
     final String path = String.format(
-        "%s/%s/in.md",
+        "%s/%s/in",
         integrationTestsFolderPath,
         Thread.currentThread().getStackTrace()[2].getMethodName()
     );

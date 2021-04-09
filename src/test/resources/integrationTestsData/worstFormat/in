@@ -1,0 +1,20 @@
+`worst format file`
+
+```markdown
+# code block
+## code block
+# Header
+# Header
+```
+
+```markdown incorrect code block```
+
+   # Header with space at the start
+
+# Header with to  space at middle
+
+# \/Strange *header ., #
+lorem
+
+## Duplicate
+## Duplicate

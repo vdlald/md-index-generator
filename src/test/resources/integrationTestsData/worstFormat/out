@@ -1,0 +1,26 @@
+1. [Header with space at the start](#header-with-space-at-the-start)
+2. [Header with to  space at middle](#header-with-to-space-at-middle)
+3. [\/Strange *header ., #](#strange-header-)
+    1. [Duplicate](#duplicate)
+    2. [Duplicate](#duplicate-1)
+
+`worst format file`
+
+```markdown
+# code block
+## code block
+# Header
+# Header
+```
+
+```markdown incorrect code block```
+
+   # Header with space at the start
+
+# Header with to  space at middle
+
+# \/Strange *header ., #
+lorem
+
+## Duplicate
+## Duplicate
