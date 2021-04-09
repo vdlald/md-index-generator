@@ -18,7 +18,9 @@ public class TableOfContentsParser {
     String line;
     boolean skip = false;
     while ((line = in.readLine()) != null) {
-      line = line.trim();
+      if (!line.startsWith("    ")) {
+        line = line.trim();
+      }
       final MdElementType type = elementTypeIdentifier.identify(line);
 
       switch (type) {
