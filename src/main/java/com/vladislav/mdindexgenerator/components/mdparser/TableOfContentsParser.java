@@ -16,11 +16,23 @@ public class TableOfContentsParser {
   public TableOfContents parse(BufferedReader in) throws IOException {
     final TableOfContents tableOfContents = new TableOfContents();
     String line;
+    boolean skip = false;
     while ((line = in.readLine()) != null) {
       line = line.trim();
       final MdElementType type = elementTypeIdentifier.identify(line);
 
-      if (type != MdElementType.HEADER) {
+      switch (type) {
+        case CODE_BLOCK_START -> {
+          skip = true;
+          continue;
+        }
+        case CODE_BLOCK_END -> {
+          skip = false;
+          continue;
+        }
+      }
+
+      if (type != MdElementType.HEADER || skip) {
         continue;
       }
 
