@@ -20,10 +20,10 @@ public class MdElementTypeIdentifierImpl implements MdElementTypeIdentifier {
       }
       return MdElementType.OTHER;
     } else if (line.startsWith("    ")) {
-      return MdElementType.CODE_BLOCK;
+      return MdElementType.CODE_BLOCK_INLINE;
     } else if (line.startsWith("```")) {
       if (line.length() > 3 && line.endsWith("```")) {
-        return MdElementType.CODE_BLOCK;
+        return MdElementType.CODE_BLOCK_INLINE;
       }
       final String substring = line.substring(3).trim();
       if (substring.isEmpty()) {
@@ -31,6 +31,14 @@ public class MdElementTypeIdentifierImpl implements MdElementTypeIdentifier {
       } else {
         return MdElementType.CODE_BLOCK_START;
       }
+    } else if (line.startsWith("{++")) {
+      if (line.endsWith("--}")) {
+        return MdElementType.EDITING_BLOCK_INLINE;
+      } else {
+        return MdElementType.EDITING_BLOCK_START;
+      }
+    } else if (line.endsWith("--}")) {
+      return MdElementType.CODE_BLOCK_END;
     } else {
       return MdElementType.OTHER;
     }

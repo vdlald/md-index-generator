@@ -24,11 +24,11 @@ public class TableOfContentsParser {
       final MdElementType type = elementTypeIdentifier.identify(line);
 
       switch (type) {
-        case CODE_BLOCK_START -> {
+        case CODE_BLOCK_START, EDITING_BLOCK_START -> {
           skip = true;
           continue;
         }
-        case CODE_BLOCK_END -> {
+        case CODE_BLOCK_END, EDITING_BLOCK_END -> {
           skip = false;
           continue;
         }
