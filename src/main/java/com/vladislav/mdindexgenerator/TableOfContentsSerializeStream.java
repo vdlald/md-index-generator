@@ -1,12 +1,36 @@
 package com.vladislav.mdindexgenerator;
 
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class TableOfContentsSerializeStream {
 
   private final Iterator<HeadElement> headers;
+
+  private short lastLevel = 1;
+  private final String tab;
+  private final Map<String, Integer> links = new HashMap<>();
+  private final Map<Short, Integer> levelsCount = new HashMap<>(6) {{
+    put((short) 1, 1);
+    put((short) 2, 1);
+    put((short) 3, 1);
+    put((short) 4, 1);
+    put((short) 5, 1);
+    put((short) 6, 1);
+  }};
+
+  @SuppressWarnings("unused")
+  public static TableOfContentsSerializeStream spaceTab(Iterator<HeadElement> headers) {
+    return new TableOfContentsSerializeStream(headers, "    ");
+  }
+
+  @SuppressWarnings("unused")
+  public static TableOfContentsSerializeStream tab(Iterator<HeadElement> headers) {
+    return new TableOfContentsSerializeStream(headers, "\t");
+  }
 
   public boolean hasNext() {
     return headers.hasNext();
@@ -15,13 +39,37 @@ public class TableOfContentsSerializeStream {
   public String nextLine() {
     final HeadElement headElement = headers.next();
 
+    // prepare
     final String line = headElement.getLine();
-
     final String content = line.substring(headElement.getLevel()).trim();
     final short level = headElement.getLevel();
     final String link = headElement.getLink();
-    final String tabs = "\t".repeat(level);
 
-    return String.format("%s[%s](%s)", tabs, content, link);
+    // logic
+    final String tabs = tab.repeat(level - 1);
+
+    String duplicateId = "";
+
+    // check duplicate headers
+    final Integer count = links.get(link);
+    if (count == null) {
+      links.put(link, 1);
+    } else {
+      links.put(link, count + 1);
+      duplicateId = "-" + count;
+    }
+
+    // reset level
+    if (Integer.compare(level, lastLevel) == -1) {
+      levelsCount.put(lastLevel, 1);
+    }
+
+    // add number to header
+    final Integer levelCount = levelsCount.get(level);
+    levelsCount.put(level, levelCount + 1);
+
+    lastLevel = level;
+
+    return String.format("%s%d. [%s](%s%s)", tabs, levelCount, content, link, duplicateId);
   }
 }

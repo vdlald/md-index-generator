@@ -68,7 +68,7 @@ public class App implements Runnable {
     }
 
     final Iterator<HeadElement> iterator = tableOfContents.getHeaders().iterator();
-    final var serializeStream = new TableOfContentsSerializeStream(iterator);
+    final var serializeStream = TableOfContentsSerializeStream.spaceTab(iterator);
 
     while (serializeStream.hasNext()) {
       System.out.println(serializeStream.nextLine());
