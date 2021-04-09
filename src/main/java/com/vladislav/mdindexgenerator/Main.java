@@ -9,24 +9,38 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.Reader;
+import java.util.function.Consumer;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.SneakyThrows;
 
-public class Main {
+@RequiredArgsConstructor
+public class Main implements Runnable {
 
-  @SneakyThrows
+  private final String[] args;
+
+  @Setter  // for testing
+  private MdElementTypeIdentifier identifier = new MdElementTypeIdentifierImpl();
+  @Setter  // for testing
+  private TableOfContentsParser tableOfContentsParser = new TableOfContentsParser(identifier);
+  @Setter  // for testing
+  private TableOfContentsSerializeStreamFactory streamFactory = new TableOfContentsSerializeStreamFactory();
+  @Setter
+  private Consumer<String> out = System.out::println;
+
   public static void main(String[] args) {
+    new Main(args).run();
+  }
 
+  @Override
+  @SneakyThrows
+  public void run() {
     // get path to file
     if (args.length == 0) {
       System.out.println("You need to specify the path to the md file.");
       return;
     }
     final String pathToMdFile = args[0];
-
-    // create dependencies
-    final var streamFactory = new TableOfContentsSerializeStreamFactory();
-    final MdElementTypeIdentifier identifier = new MdElementTypeIdentifierImpl();
-    final var tableOfContentsParser = new TableOfContentsParser(identifier);
 
     // create reader
     BufferedReader bufferedReader;
@@ -35,20 +49,20 @@ public class Main {
       fileReader = new FileReader(pathToMdFile);
       bufferedReader = new BufferedReader(fileReader);
     } catch (FileNotFoundException e) {
-      System.out.println("File not found.");
+      out.accept("File not found.");
       return;
     }
 
     // create app
     new GenerateIndex(
         bufferedReader,
-        System.out::println,
+        out,
         tableOfContentsParser,
         streamFactory
     ).run();
 
     bufferedReader.close();
-    System.out.println();
+    out.accept("");  // new line
 
     // recreate readers
     fileReader = new FileReader(pathToMdFile);
@@ -57,7 +71,7 @@ public class Main {
     // print file
     String line;
     while ((line = bufferedReader.readLine()) != null) {
-      System.out.println(line);
+      out.accept(line);
     }
 
     bufferedReader.close();
