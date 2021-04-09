@@ -7,7 +7,7 @@ import java.nio.file.Path;
 import lombok.SneakyThrows;
 import org.junit.Test;
 
-public class MainIntegrationTest {
+public class MainIntegrationTests {
 
   @Test
   public void simpleTest() {
@@ -36,7 +36,7 @@ public class MainIntegrationTest {
   @SneakyThrows
   private String getOut() {
     final String methodName = Thread.currentThread().getStackTrace()[2].getMethodName();
-    final String rawPath = MainIntegrationTest.class
+    final String rawPath = MainIntegrationTests.class
         .getResource(String.format("/%s/out.md", methodName)).getPath();
     final Path path = Path.of(rawPath);
     return new String(Files.readAllBytes(path));
@@ -54,6 +54,6 @@ public class MainIntegrationTest {
   private String getInPath() {
     final String path = String.format(
         "/%s/in.md", Thread.currentThread().getStackTrace()[2].getMethodName());
-    return MainIntegrationTest.class.getResource(path).getPath();
+    return MainIntegrationTests.class.getResource(path).getPath();
   }
 }
